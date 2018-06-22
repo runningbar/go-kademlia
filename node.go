@@ -10,7 +10,8 @@ const keySpaceBits = 160
 
 // Node 代表kademlia网络的参与者
 type Node struct {
-	ID NodeID
+	ID         NodeID
+	KeyValueDB *Database
 }
 
 // NodeID 节点ID
@@ -33,7 +34,9 @@ func (id NodeID) getHexString() string {
 }
 
 func newNode() (*Node, error) {
-	n := &Node{}
+	n := &Node{
+		KeyValueDB: &Database{Path: "./keyvaluedb"},
+	}
 	id, err := n.generateNodeID()
 	if err != nil {
 		return nil, err
@@ -49,4 +52,19 @@ func main() {
 		return
 	}
 	n.ID.getHexString()
+
+	value, err := n.KeyValueDB.get([20]byte{223})
+	if err != nil {
+		fmt.Println("get error:", err)
+	} else {
+		fmt.Println("value =", string(value))
+	}
+
+	err = n.KeyValueDB.put([20]byte{223}, []byte("helloworld!"))
+	if err != nil {
+		fmt.Println("put error:", err)
+	} else {
+		value, _ := n.KeyValueDB.get([20]byte{223})
+		fmt.Println("now value =", string(value))
+	}
 }

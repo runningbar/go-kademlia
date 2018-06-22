@@ -1,1 +1,6 @@
+# 忽略系统环境
 .DS_Store
+
+
+# 忽略开发调试
+keyvaluedb
