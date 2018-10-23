@@ -7,3 +7,5 @@
 * 借鉴了`go-ethereum`中`devp2p`的实现
 
 * 使用[`leveldb`](https://github.com/syndtr/goleveldb)存储`<key, value>`对
+
+* 使用`json`做消息序列化，不用`grpc`和`protobuf`是因为`grpc`不支持`UDP`

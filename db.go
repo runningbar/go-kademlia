@@ -7,13 +7,26 @@ type Database struct {
 	Path string // db的路径
 }
 
-func (db Database) get(key [keySpaceBits / 8]byte) (value []byte, err error) {
+// func (db Database) get(key [keySpaceBits / 8]byte) (value []byte, err error) {
+// 	d, err := leveldb.OpenFile(db.Path, nil)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+// 	defer d.Close()
+// 	value, err = d.Get(key[:], nil)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+// 	return value, nil
+// }
+
+func (db Database) get(key []byte) (value []byte, err error) {
 	d, err := leveldb.OpenFile(db.Path, nil)
 	if err != nil {
 		return nil, err
 	}
 	defer d.Close()
-	value, err = d.Get(key[:], nil)
+	value, err = d.Get(key, nil)
 	if err != nil {
 		return nil, err
 	}
